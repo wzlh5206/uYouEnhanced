@@ -124,7 +124,8 @@ jobs:
       - name: Prepare YouTube iPA
         id: prepare_youtube
         run: |
-          wget "$YOUTUBE_URL" --quiet --no-verbose -O main/YouTube.ipa
+          gh release download v1 --repo wzlh5206/build-assets-priv --pattern "*.ipa" --clobber -D main
+          mv main/com.google.ios.youtube-20.05.4-Decrypted.ipa main/YouTube.ipa
           cd ${{ github.workspace }}/main
           mv YouTube.ipa YouTube.zip
           unzip -q YouTube.zip
@@ -136,6 +137,7 @@ jobs:
         env:
           THEOS: ${{ github.workspace }}/theos
           YOUTUBE_URL: ${{ env.URL_YT }}
+          GH_TOKEN: ${{ secrets.BASE_IPA_TOKEN }}
 
       - name: Fix compiling & Build Package
         id: build_package
