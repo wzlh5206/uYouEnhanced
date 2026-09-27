@@ -79,3 +79,8 @@ else
 before-package::
 	@mkdir -p $(THEOS_STAGING_DIR)/Library/Application\ Support; cp -r Localizations/uYouPlus.bundle $(THEOS_STAGING_DIR)/Library/Application\ Support/
 endif
+
+# Local build fix: Xcode 16 clang promotes -Wincompatible-pointer-types to error
+export ADDITIONAL_CFLAGS += -Wno-error=incompatible-pointer-types
+export ADDITIONAL_OBJCFLAGS += -Wno-error=incompatible-pointer-types
+export ADDITIONAL_CXXFLAGS += -Wno-error
